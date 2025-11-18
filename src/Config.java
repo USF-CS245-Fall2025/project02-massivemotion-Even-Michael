@@ -14,7 +14,13 @@ public class Config {
     // Instance variable : holds all key=value pairs
     private final Properties props = new Properties();
 
-    // Constructor : Loads file into Properties object 
+    /**
+     * Constructor
+     * Loads configuration values from the given file.
+     *
+     * @param filename path to the properties file (e.g. MassiveMotion.txt)
+     * @throws RuntimeException if the file cannot be read
+     */
     public Config (String filename) {
         // filInpStrm : short-hand for file input stream
         try (FileInputStream filInpStrm = new FileInputStream(filename)) {    
@@ -27,6 +33,14 @@ public class Config {
 
     // Getter Methods
 
+    /**
+     * Returns the string value associated with the given key, or the default
+     * value if the key is missing.
+     *
+     * @param key configuration key
+     * @param defaultValue value to use if key is not present
+     * @return the resolved string value
+     */
     public String getString(String key, String defaultValue) {
         String value = props.getProperty(key);
 
@@ -42,7 +56,14 @@ public class Config {
         }
     }
 
-    
+    /**
+     * Returns the integer value associated with the given key, or the default
+     * value if the key is missing or not a valid integer.
+     *
+     * @param key configuration key
+     * @param defaultValue value to use if key is not present or invalid
+     * @return parsed integer value
+     */
     public int getInt(String key, int defaultValue) {
         String value = getString(key, String.valueOf(defaultValue));
 
@@ -54,6 +75,15 @@ public class Config {
         }
     }
 
+
+    /**
+     * Returns the double value associated with the given key, or the default
+     * if missing or invalid.
+     *
+     * @param key configuration key
+     * @param defaultValue value to use if key is not present or invalid
+     * @return parsed double value
+     */
     public double getDouble(String key, double defaultValue) {
         String value = getString(key, String.valueOf(defaultValue));
         try {
@@ -64,35 +94,42 @@ public class Config {
         }
     }
 
-
+    /** @return window width in pixels. */
     public int windowW() { 
         return getInt("window_size_x", 640); 
     }
-    
+
+    /** @return window height in pixels. */
     public int windowH() { 
         return getInt("window_size_y", 480); 
     }
-    
+
+    /** @return which list implementation to use (e.g. "array", "linked"). */
     public String listType() { 
         return getString("list", "arraylist").toLowerCase(); 
     }
 
+    /** @return initial x-position of the central star. */
     public int starX() { 
         return getInt("star_position_x", windowW()/2); 
     }
-    
+
+    /** @return initial y-position of the central star. */
     public int starY() { 
         return getInt("star_position_y", windowH()/2); 
     }
-    
+
+    /** @return horizontal velocity of the star. */
     public int starVx() { 
         return getInt("star_velocity_x", 0); 
     }
-    
+
+    /** @return vertical velocity of the star. */
     public int starVy() { 
         return getInt("star_velocity_y", 0); 
     }
 
+    /** @return size (radius or diameter) of secondary bodies. */
     public int bodySize() { 
         return getInt("body_size", 4); 
     }
@@ -107,25 +144,35 @@ public class Config {
         }
         return v;
     }
-
+    
+    /**
+     * @return x-coordinate at which new bodies are generated
+     *         (often randomized along the edge).
+     */
     public double genX() { 
         return clampRange01( getDouble("gen_x", 0.02) ); 
     }
     
+    /**
+     * @return y-coordinate at which new bodies are generated.
+     */
     public double genY() { 
         return clampRange01( getDouble("gen_y", 0.02) ); 
     }
 
     // Math.max enforces a safe minimum for things that must be positive
     
+    /** @return timer delay in milliseconds between animation frames. */
     public int timerDelayMs() { 
         return Math.max(1, getInt("timer_delay", 16) ); 
     }
 
+    /** @return size of the central star in pixels. */
     public int starSize() { 
         return Math.max(1, getInt("star_size", 10) ); 
     }
 
+    /** @return range of velocities used for spawned bodies. */
     public int bodyVelRange() { 
         return Math.max(1, getInt("body_velocity", 5) ); 
     }

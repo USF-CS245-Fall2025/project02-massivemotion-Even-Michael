@@ -1,6 +1,3 @@
-package ListImpls;
-
-
 public class ListImpl_Double<T> implements List<T> {
 
     // Doubly-linked node

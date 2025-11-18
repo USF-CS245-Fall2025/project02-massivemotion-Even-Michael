@@ -1,6 +1,3 @@
-package ListImpls;
-
-
 public class ListImpl_DummyHead<T> implements List<T> {
 
     // Singly-linked node

@@ -1,6 +1,3 @@
-package ListImpls;
-
-
 public class ListImpl_Linked<T> implements List<T> {
 
     // Simple singly-linked node

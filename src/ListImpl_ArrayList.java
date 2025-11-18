@@ -1,6 +1,3 @@
-package ListImpls;
-
-
 public class ListImpl_ArrayList<T> implements List<T> {
 
     // Storage
@@ -19,7 +16,6 @@ public class ListImpl_ArrayList<T> implements List<T> {
         this.size = 0;
     }
 
-    // Core API
     private void growArray() {
         int newCap = Math.max(1, arr.length * 2);
         T[] newArr = newArray(newCap);
