@@ -4,13 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-import ListImpls.List;
-import ListImpls.ListImpl_ArrayList;
-import ListImpls.ListImpl_Linked;
-import ListImpls.ListImpl_Double;
-import ListImpls.ListImpl_DummyHead;
-
-
 public class MassiveMotion extends JPanel implements ActionListener {
 
     protected Timer tm;
