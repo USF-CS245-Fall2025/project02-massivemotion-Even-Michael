@@ -4,8 +4,8 @@ CS 245 Project 02
     - Even Michael
 
 # How to Run :
-First make sure you are in the ** src ** folder**
-
+    First make sure you are in the ** src ** folder**
+    
     Compile
         -->| javac *.java
     Then run :
