@@ -1,3 +1,8 @@
+/**
+ * DoubleLinkedList based implementation of the List<T> interface
+ *
+ * @param <T> the type of elements stored in this list
+ */
 public class ListImpl_Double<T> implements List<T> {
 
     // Doubly-linked node
@@ -32,49 +37,55 @@ public class ListImpl_Double<T> implements List<T> {
         }
     }
 
+
+    /**
+     * Inserts the specified item at the given position in the list.
+     * If inserting at the end, this method reuses the append logic.
+     * Otherwise, the new node is linked before the node currently
+     * at the specified position.
+     *
+     * @param pos the index at which the item should be inserted
+     * @param item the element to insert
+     */
     @Override
     public void add(int pos, T item) {
         if (pos < 0 || pos > size) {
             throw new IndexOutOfBoundsException("index=" + pos + ", size=" + size);
         }
 
-        // insert into empty list (pos == 0)
-        if (size == 0) {
-            Node n = new Node(item);
-            head = tail = n;
-            size++;
-            return;
-        }
-
-        // insert at head
-        if (pos == 0) {
-            Node n = new Node(item);
-            n.next = head;
-            head.prev = n;
-            head = n;
-            size++;
-            return;
-        }
+        Node n = new Node(item);
 
         // append at tail
         if (pos == size) {
-            add(item); // reuse append path
+            add(item);
             return;
         }
 
         // insert before current node at index pos (middle)
         Node nextNode = nodeAt(pos);
         Node prevNode = nextNode.prev;
-        Node n = new Node(item);
-
+        
         n.prev = prevNode;
         n.next = nextNode;
-        prevNode.next = n;
+
+        if (prevNode == null) {
+            head = n;
+        } else {
+            prevNode.next = n;
+        }
+
         nextNode.prev = n;
 
         size++;
     }
 
+
+    /**
+     * Appends item to the end of the list.
+     *
+     * @param item the element to append
+     * @return true (from list interface)
+     */
     @Override
     public boolean add(T item) {
         Node n = new Node(item);
@@ -89,6 +100,12 @@ public class ListImpl_Double<T> implements List<T> {
         return true;
     }
 
+    /**
+     * Returns the element at the specified position in the list.
+     *
+     * @param pos the index of the element to retrieve
+     * @return the element stored at pos
+     */
     @Override
     public T get(int pos) {
         if (pos < 0 || pos >= size) {
@@ -97,6 +114,14 @@ public class ListImpl_Double<T> implements List<T> {
         return nodeAt(pos).data;
     }
 
+
+    /**
+     * Removes the element at the specified position in the list.
+     * Handles removal at the head, tail, or any middle position.
+     *
+     * @param pos the index of the element to remove
+     * @return the element that was removed
+     */
     @Override
     public T remove(int pos) {
         if (pos < 0 || pos >= size) {
@@ -109,7 +134,7 @@ public class ListImpl_Double<T> implements List<T> {
             T val = old.data;
             head = old.next;
             if (head == null) {
-                tail = null;        // list became empty
+                tail = null;       
             } else {
                 head.prev = null;
             }
@@ -123,7 +148,7 @@ public class ListImpl_Double<T> implements List<T> {
             T val = old.data;
             tail = old.prev;
             if (tail == null) {
-                head = null;        // list became empty
+                head = null;        
             } else {
                 tail.next = null;
             }
@@ -144,6 +169,11 @@ public class ListImpl_Double<T> implements List<T> {
         return val;
     }
 
+    /**
+     * Returns the number of elements currently stored in the list.
+     *
+     * @return the number of elements in this list
+     */
     @Override
     public int size() {
         return size;
